@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+
+# ignore this for now to prevent annoying projectId changes
+*.Rproj
