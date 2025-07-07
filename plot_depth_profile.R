@@ -84,6 +84,7 @@ plot_depth_profile <- function(andes_db_connection, mission_id = 0, set_number =
 #########################################################
 
 
-# voir le profile de profondeur du trait 34
-# plot_depth_profile(andes_db_connection, mission_id = 67, set_number = 34)
+
+# voir le profile de profondeur du trait 33
+plot_depth_profile(andes_db_connection, mission_id = 68, set_number = 1)
 

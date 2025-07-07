@@ -1,7 +1,7 @@
 # Table mesures  
 `OBS` : simplement un no. séquentiel i.e., le num de ligne ?  
 `Mesureur` : Nom du mesureur, je peux donne les noms d'ANDES? i.e., seanfd, sauthier, sarah, isabelle,  (et pas DS, GC, SL, IL)  
-`Date` :   
+`Date` :  
 `MISSION` : chiffres? je peux dire IML-2025-007 ?  
 `ANNEE` :  
 `MOIS` :  
@@ -10,7 +10,7 @@
 `NO_ECHAN` : Meme chose de TRAIT?   
 `REPLICAT` : ??  
 `SPECIMEN` : On dirait le no. specimen du trait (recommence a 1 pour chauque nouveau trait.) Je peux donner le no. specimen unique d'ANDES?  
-`Espece` : Je peux donner le APHIA_ID et/ou le nom binomial ? ou les deux?  
+`Espece` : Je peux donner le APHIA_ID et/ou le nom binomial ? ou les deux?  (CO etc...)
 `N_USAGER` : ??  
 `SEXE` : 1= Male, 2 = Femelle     
 `ETAT_CRA` : État de la carapace crabe  (1-3): Hyas vs (1-4): Crabe Commun vs (1-5): Crabe des neiges ?  
@@ -18,7 +18,7 @@
 `MATURITE` : Maturité  
 `LARG_CAR` : Largeur céphalo  
 `HAUT_PIN` : Hauteur pince  
-`PATT_MAN` : on diriait que cEst le nombre de pattes manquantes, je peux donner le code (ex. 1B4C5C) ?  
+`PATT_MAN` : on diriait que c'est le nombre de pattes manquantes, je peux donner le code (ex. 1B4C5C) ?  
 `DUROMETR` : Duromètre  
 `LARG_ABD` : Largeur 5ieme segment  
 `STAT_FEM` : Stade maturité crabe (0-2)  
@@ -29,44 +29,42 @@
 `DACTYLP4` : ??  
 `DACTYLP9` : ??  
 `PDS_HUM` : ??  
-`TRACE_AC` : ??
+`TRACE_AC` : ?? 
 ## autre
 l'heure?
 commentaire specimen?
 
 # Table de traits  
-`MISSION` : (meme que table mesures)  
-`TRAIT` : (meme que table mesures)  
-`NO_ECHAN` : (meme que table mesures)  
-`ANNEE` :   
-`MOIS` :   
-`JOUR` :   
-`ENGIN` : Je peux donner le nom de l'engin d'ANDES? (ex. "Chalut a perche")  
-`PROF_MOY` : doit calculer  
-`HEUR_DEB` :   
-`HEUR_FIN` :   
-`LAT_DEB` :   
-`LON_DEB` :   
-`LAT_FIN` :   
-`LON_FIN` :   
-`DUREE` : ?? calculer selon temps? je peux laisser vide?  
-`VITESSE` : ?? calculer selon temps et pos? je peux laisser vide?   
-`TEMP_FND` : ??  
+`MISSION` : Mission Andes (`shared_models_mission.mission_number`)
+`TRAIT` : Trait Andes (`shared_models_sample.sample_number`)
+`NO_ECHAN` : Trait Andes (`shared_models_sample.sample_number`)
+`ANNEE` : doit calculer (selon date)
+`MOIS` : doit calculer (selon date)
+`JOUR` : doit calculer (selon date)
+`ENGIN` : Observation Trait (`shared_models_sampleobservationtypecategory.description_fra`) 
+`PROF_MOY` : doit calculer !? 
+`HEUR_DEB` : Trait Andes (`shared_models_sample.start_date`)  
+`HEUR_FIN` : Trait Andes (`shared_models_sample.end_date`)
+`LAT_DEB` : Trait Andes (`shared_models_sample.start_latitude`)
+`LON_DEB` : Trait Andes (`shared_models_sample.start_longitude`)
+`LAT_FIN` : Trait Andes (`shared_models_sample.end_latitude`)
+`LON_FIN` : Trait Andes (`shared_models_sample.end_longitude`)
+`DUREE` : Trait Andes (`shared_models_sample.duration`)
+`VITESSE` : Trait Andes (`shared_models_sample.speed`)
+`TEMP_FND` : ?? 
 `DATA_BIO` : ??  
-`COMPLET` : Je peux donner le statut d'ANDES (inconnue, valide, non valide) ?  
-`PONDER` : ?  
-`NAVIRE` : Je peux donner le nom du navice selon ANDES (NGCC LEIM) ?  
-`SECTEUR` : ?
+`COMPLET` : Trait Andes (`shared_models_sample.is_valid`)
+`PONDER` : ?? 
+`NAVIRE` : Mission Andes (`shared_models_mission.vessel_name`)
+`SECTEUR` : Mission Andes (`shared_models_mission.area_of_operation`_)
 
-# autre
-nom_station
+# autre (mes ajouts)
+`STATION` Station Andes (`shared_models_station.name`)
 profondeur_debut
 profondeur_fin
 profondeur_min
-profondeur_fax
-commentaire_station (ie., "20-40m, nord-est")
-commentaire_trait (ie., "doublure ouverte un peu")
-l'état de la mer
+profondeur_max
+`NOTES` Trait Andes(`shared_models_sample.remarks`)
 
 ## autres
 tracé de profondeur (données du senseur, besoin pour profondeur moyenne?)
