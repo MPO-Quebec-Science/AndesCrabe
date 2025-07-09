@@ -15,7 +15,7 @@ WHERE mission_id=%d', mission_id)
   return(sets)
 }
 
-get_fishing_sets<- function(andes_db_connection, mission_id = 0) {
+get_fishing_sets_bsm<- function(andes_db_connection, mission_id = 0) {
     query <- sprintf("
     SELECT 
       shared_models_mission.mission_number as MISSION,
@@ -32,6 +32,7 @@ get_fishing_sets<- function(andes_db_connection, mission_id = 0) {
       shared_models_sample.is_valid as COMPLET,
       shared_models_sample.remarks as NOTES,
       shared_models_sample.sample_number as TRAIT,
+      shared_models_sample.sample_number as NO_ECHAN,
       shared_models_station.name as STATION,
       MAX(CASE WHEN (shared_models_sampleobservationtype.special_type='gear_type') THEN shared_models_sampleobservationtypecategory.description_fra ELSE '' END) AS ENGIN
       FROM shared_models_sample 
@@ -57,11 +58,30 @@ get_fishing_sets<- function(andes_db_connection, mission_id = 0) {
     result <- dbSendQuery(andes_db_connection, query)
     sets <- dbFetch(result, n=Inf)
     dbClearResult(result)
+    # Format the dates in the sets dataframe
+    sets <- format_dates(sets, reference_column = "HEUR_DEB")
     return(sets)
 }
 
-rename_column <- function(df, old_name, new_name) {
-  colnames(df)[which(names(df) == old_name)] <- new_name
-  return(df)
+parse_andes_datetime <- function(andes_time_str) {
+  # if (is.na(andes_time_str)==TRUE) {
+  #   return(NA)
+  # }
+  parsed_time <- as.POSIXlt(andes_time_str, format = "%Y-%m-%d %H:%M:%S", tz = "UTC", optional=TRUE)
+  # Convert ISO 8601 time to POSIXlt, ANDES DB time values are implicitly in UTC
+  return(parsed_time)
 }
 
+
+format_dates <- function(df, reference_column = "HEUR_DEB") {
+  # takes a dataframe with a date column and adds new columns for day, month, and year
+  # this will inject JOUR, MOIS, and ANNEE columns into the dataframe
+  datetimes <- parse_andes_datetime(df[,which(names(df) == reference_column)])
+
+  df["JOUR"] <- datetimes$mday
+  # Months are 0-indexed in POSIXlt, so we add 1 to get the correct month
+  df["MOIS"] <- datetimes$mon + 1 
+  # Years are counted from 1900 in POSIXlt, so we add 1900 to get the correct year
+  df["ANNEE"] <- datetimes$year + 1900
+  return(df)
+}
