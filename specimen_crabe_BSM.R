@@ -9,7 +9,7 @@ get_specimen_observations_BSM<- function(andes_db_connection, mission_id = 0) {
         shared_models_sample.start_date as HEUR_DEB,
         shared_models_referencecatch.code as STRAP_CODE,
         shared_models_referencecatch.scientific_name,
-        shared_models_sizeclass.code as SEXE,
+        shared_models_sizeclass.code as sample_class,
         MAX(CASE WHEN (shared_models_observationtype.export_name='LARG_CAR') THEN observation_value ELSE '' END) AS LARG_CAR,
         MAX(CASE WHEN (shared_models_observationtype.export_name='HAUT_PIN') THEN observation_value ELSE '' END) AS HAUT_PIN,
         MAX(CASE WHEN (shared_models_observationtype.export_name='DUROMETR') THEN observation_value ELSE '' END) AS DUROMETR,
@@ -37,29 +37,43 @@ get_specimen_observations_BSM<- function(andes_db_connection, mission_id = 0) {
     specimen_observations <- dbFetch(result, n=Inf)
     dbClearResult(result)
 
-    # add formated PATTES_MAN from missing legs
+    # add formatted PATTES_MAN from missing legs
     specimen_observations <- format_legs(specimen_observations)
 
-    # add formated Espece from STRAP_CODE
-    specimen_observations <-format_names(specimen_observations)
+    # add formatted Espece from STRAP_CODE
+    specimen_observations <- format_names(specimen_observations)
+
+    # add formatted SEXE from sample_class
+    specimen_observations <- format_sex(specimen_observations)
+    # sample_class can be removed
+    specimen_observations <- subset(specimen_observations, select = -c(sample_class) )
 
     # add format dates from the set HEUR_DEB
     specimen_observations <- format_dates(specimen_observations, reference_column = "HEUR_DEB")
     return(specimen_observations)
 }
 
-format_sex <- function(sex) {
+get_sex_from_sample_class <- function(sample_class) {
     # convert 1 and 91 to 1
     # convert 2 and 92 to 2
     # NA for anything else
     # The reasoning is because ANDES sample class 91 and 92 reprents males and females taken from biodiversity sample
-    if (sex %in% c(1, 91)) {
+
+    if (sample_class %in% c(1, 91)) {
         return(1)
-    } else if (sex %in% c(2, 92)) {
+    } else if (sample_class %in% c(2, 92)) {
         return(2)
     } else {
         return (NA)
+    }
+}
 
+
+
+format_sex <- function(df) {
+    sample_class <- df[,which(names(df) == "sample_class")]
+    df["SEXE"] <- unlist(lapply(sample_class, get_sex_from_sample_class))
+    return(df)
 }
 
 parse_missing_legs <- function( missing_legs_str) {
@@ -96,9 +110,6 @@ format_names <- function(df) {
     df["Espece"] <- unlist(lapply(codes, rename_species))
     return(df)
 }
-
-rename_species(codes[2])
-rename_species(8111)
 
 specimens <- get_specimen_observations_BSM(andes_db_connection, mission_id = 67)
 View(specimens)
