@@ -7,7 +7,7 @@ get_specimen_observations_BSM<- function(andes_db_connection, mission_id = 0) {
         shared_models_sample.sample_number as TRAIT,
         shared_models_sample.sample_number as NO_ECHAN,
         shared_models_sample.start_date as HEUR_DEB,
-        shared_models_referencecatch.aphia_id,
+        shared_models_referencecatch.code as STRAP_CODE,
         shared_models_referencecatch.scientific_name,
         shared_models_sizeclass.code as SEXE,
         MAX(CASE WHEN (shared_models_observationtype.export_name='LARG_CAR') THEN observation_value ELSE '' END) AS LARG_CAR,
@@ -19,7 +19,7 @@ get_specimen_observations_BSM<- function(andes_db_connection, mission_id = 0) {
         MAX(CASE WHEN (shared_models_observationtype.export_name='STAT_FEM') THEN observation_value ELSE '' END) AS STAT_FEM,
         MAX(CASE WHEN (shared_models_observationtype.export_name='DEV_OEUF') THEN observation_value ELSE '' END) AS DEV_OEUF, 
         MAX(CASE WHEN (shared_models_observationtype.export_name='LARG_ABD') THEN observation_value ELSE '' END) AS LARG_ABD,   
-        MAX(CASE WHEN (shared_models_observationtype.export_name='DEV_OEUF') THEN observation_value ELSE '' END) AS DEV_OEUF, 
+        MAX(CASE WHEN (shared_models_observationtype.export_name='DEV_OEUF') THEN observation_value ELSE '' END) AS DEV_OEUF,  
         MAX(CASE WHEN (shared_models_observationtype.export_name='missing_legs') THEN observation_value ELSE '' END) AS missing_legs
     FROM shared_models_observation
     LEFT JOIN shared_models_observationtype ON shared_models_observationtype.id=shared_models_observation.observation_type_id
@@ -36,10 +36,14 @@ get_specimen_observations_BSM<- function(andes_db_connection, mission_id = 0) {
     result <-dbSendQuery(andes_db_connection, query)
     specimen_observations <- dbFetch(result, n=Inf)
     dbClearResult(result)
-    # Format PATTES_MAN from missing legs
+
+    # add formated PATTES_MAN from missing legs
     specimen_observations <- format_legs(specimen_observations)
 
-    # Format the dates in the sets dataframe
+    # add formated Espece from STRAP_CODE
+    specimen_observations <-format_names(specimen_observations)
+
+    # add format dates from the set HEUR_DEB
     specimen_observations <- format_dates(specimen_observations, reference_column = "HEUR_DEB")
     return(specimen_observations)
 }
@@ -71,16 +75,30 @@ parse_missing_legs <- function( missing_legs_str) {
 
 format_legs <- function(df) {
     legs <- df[,which(names(df) == "missing_legs")]
-    df["PATT_MAN"] <- unlist(lapply(df, parse_missing_legs))
-    return (df)
+    df["PATT_MAN"] <- unlist(lapply(legs, parse_missing_legs))
+    return(df)
 }
 
-rename_species <- function(str) {
-    
+rename_species <- function(strap_code) {
+    strap_code<-toString(strap_code)
+    code_name_map <- c(
+        "8196"="LM", # crabe épineux Lithodes maja
+        "8206"="CC", # crabe commun Cancer irroratus
+        "8213"="CO", # crabe des neiges Chionoecetes opilio
+        "8217"="HC", # crabe lyre Hyas alutaceus (anciennement coartatus)
+        "8219"="HA"  # crabe araignée Hyas araneus
+    )
+    return(code_name_map[strap_code])
 }
 
-format_name <-function(df)
+format_names <- function(df) {
+    codes <- df[,which(names(df) == "STRAP_CODE")]
+    df["Espece"] <- unlist(lapply(codes, rename_species))
+    return(df)
+}
+
+rename_species(codes[2])
+rename_species(8111)
 
 specimens <- get_specimen_observations_BSM(andes_db_connection, mission_id = 67)
 View(specimens)
-
