@@ -52,8 +52,8 @@ get_fishing_sets_bsm_db<- function(andes_db_connection) {
 #' @return A dataframe containing fishing set data.
 #' @seealso [get_specimen_bsm_db()] for the raw database results
 #' @export
-get_specimen_bsm<- function(andes_db_connection) {
-    specimens <- get_specimen_bsm_db(andes_db_connection)
+get_specimens_bsm<- function(andes_db_connection) {
+    specimens <- get_specimens_bsm_db(andes_db_connection)
 
     # add formatted PATTES_MAN from missing legs
     specimens <- format_legs(specimens)
@@ -86,7 +86,7 @@ get_specimen_bsm<- function(andes_db_connection) {
 #' @return A dataframe containing fishing set data.
 #' @seealso [get_specimen_bsm()] for the formatted results
 #' @export
-get_specimen_bsm_db<- function(andes_db_connection) {
+get_specimens_bsm_db<- function(andes_db_connection) {
     query <- readr::read_file(system.file("sql_queries",
                                         "specimens_bsm.sql",
                                         package = "ANDESCrabe"))

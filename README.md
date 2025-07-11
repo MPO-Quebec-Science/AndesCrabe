@@ -5,15 +5,18 @@ Ce dépot contient des wrappers en `R` de commandes `SQL` pour extraire des donn
 ## Installation
 ``` R
 devtools::install_github("MPO-Quebec-Science/AndesCrabe")
+
 ```
 
 # Utilisation
 1. Installer
 2. Donner les détails de la connexion
 3. Établir un connexion
-4. Obtenir les données avec `get_fishing_sets_bsm()` et `get_specimen_bsm()`
+4. Obtenir les données avec `get_fishing_sets_bsm()` et `get_specimens_bsm()`
 
 ``` R
+library(ANDESCrabe)
+
 # Infos connexion BD, voir section Authentification Connexion BD
 url_bd <- "iml-science-4.ent.dfo-mpo.ca"
 port_bd <- 25993
@@ -33,7 +36,7 @@ andes_db_connection <- andes_db_connect(
 traits <- get_fishing_sets_bsm(andes_db_connection)
 View(traits)
 # les spécimens
-specimens <- get_specimen_bsm(andes_db_connection)
+specimens <- get_specimens_bsm(andes_db_connection)
 View(specimens)
 ```
 
