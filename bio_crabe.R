@@ -24,6 +24,10 @@ andes_db_connection <- andes_db_connect(
 
 sets <- get_fishing_sets_bsm(andes_db_connection)
 View(sets)
+
+specimens <- get_specimen_bsm_db(andes_db_connection)
+View(specimens)
+
 # install.packages("devtools")
 # install.packages("roxygen2")
 # devtools::create("ANDESCrabe")

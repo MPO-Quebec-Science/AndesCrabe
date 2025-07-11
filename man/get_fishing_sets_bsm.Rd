@@ -7,7 +7,7 @@
 get_fishing_sets_bsm(andes_db_connection)
 }
 \arguments{
-\item{andes_db_connection}{a connection object to the ANDES database. Please}
+\item{andes_db_connection}{a connection object to the ANDES database.}
 }
 \value{
 A dataframe containing fishing set data.
