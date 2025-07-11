@@ -1,13 +1,4 @@
 
-source('connexion_andes.R')
-
-source('trait_crabe_bsm.R')
-sets <- get_fishing_sets_bsm(andes_db_connection, mission_id = 67)
-View(sets)
-
-traits <- format_pour_crabe_trait(sets)
-View(traits)
-
 source('specimen_crabe_BSM.R')
 specimens <- get_specimen_observations_BSM(andes_db_connection, mission_id = 67)
 View(specimens)
@@ -31,6 +22,8 @@ andes_db_connection <- andes_db_connect(
 )
 
 
+sets <- get_fishing_sets_bsm(andes_db_connection)
+View(sets)
 # install.packages("devtools")
 # install.packages("roxygen2")
 # devtools::create("ANDESCrabe")

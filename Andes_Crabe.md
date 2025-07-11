@@ -1,11 +1,11 @@
 # Table mesures  
 - `OBS` : simplement un no. séquentiel i.e., le num de ligne ?  
 - `Mesureur` : Nom du mesureur, je peux donne les noms d'ANDES? i.e., seanfd, sauthier, sarah, isabelle,  (et pas DS, GC, SL, IL)  
-- `Date` :  
+- `Date` :  date-heure debut trait)
 - `MISSION` : chiffres? je peux dire IML-2025-007 ?  
-- `ANNEE` :  
-- `MOIS` :  
-- `JOUR` :   
+- `ANNEE` : doit calculer (selon date-heure debut trait)
+- `MOIS` : doit calculer (selon date-heure debut trait)
+- `JOUR` : doit calculer (selon date-heure debut trait)
 - `TRAIT` : chiffre séquentiel? je peux donner le num. trait d'ANDES (il va parfois avoir des trous pour les traits manquants / CTDs)  
 - `NO_ECHAN` : Meme chose de TRAIT?   
 - `REPLICAT` : ??  
@@ -38,9 +38,9 @@ commentaire specimen?
 - `MISSION` : Mission Andes (`shared_models_mission.mission_number`)  
 - `TRAIT` : Trait Andes (`shared_models_sample.sample_number`)  
 - `NO_ECHAN` : Trait Andes (`shared_models_sample.sample_number`)  
-- `ANNEE` : doit calculer (selon date)  
-- `MOIS` : doit calculer (selon date)  
-- `JOUR` : doit calculer (selon date)  
+- `ANNEE` : doit calculer (selon date-heure debut trait)  
+- `MOIS` : doit calculer (selon date-heure debut trait)  
+- `JOUR` : doit calculer (selon date-heure debut trait)  
 - `ENGIN` : Observation Trait (`shared_models_sampleobservationtypecategory.description_fra`)  
 - `PROF_MOY` : doit calculer !?  
 - `HEUR_DEB` : Trait Andes (`shared_models_sample.start_date`)    
