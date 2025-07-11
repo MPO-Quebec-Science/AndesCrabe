@@ -39,6 +39,6 @@ get_fishing_sets_bsm_db<- function(andes_db_connection) {
     sets <- RMySQL::dbFetch(result, n = Inf)
     RMySQL::dbClearResult(result)
     # Format the dates in the sets dataframe
-    # sets <- format_dates(sets, reference_column = "HEUR_DEB")
+    sets <- format_dates(sets, reference_column = "HEUR_DEB")
     return(sets)
 }
