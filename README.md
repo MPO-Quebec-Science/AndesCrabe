@@ -5,7 +5,6 @@ Ce dépot contient des wrappers en `R` de commandes `SQL` pour extraire des donn
 ## Installation
 ``` R
 devtools::install_github("MPO-Quebec-Science/AndesCrabe")
-
 ```
 
 # Utilisation
@@ -51,3 +50,10 @@ devtools::load_all()
 devtools::document()
 ```
 to load the library in memory without installing it.
+
+To test the github package, detach an re-install
+```
+detach("package:ANDESCrabe", unload=TRUE)
+devtools::install_github("MPO-Quebec-Science/AndesCrabe")
+library(ANDESCrabe)
+```
