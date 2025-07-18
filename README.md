@@ -2,6 +2,15 @@
 
 Ce dépot contient des wrappers en `R` de commandes `SQL` pour extraire des données de crabe des neiges (équipe IML de la région du Québec) fait avec ANDES.
 
+## Requirements
+The `{MySQL ODBC 8.0 Unicode Driver}` should be available on DFO workstations. It can be installed in the software center.
+Name: MySQL Connector ODBC
+Version 8.0.22
+
+URL: softwarecenter:SoftwareID=ScopeId_A90E3BBE-DB35-4A92-A44E-15F8C7C595B3/Application_dec16a4a-d57f-44b1-8a9f-8f6267f34539
+
+List available drivers `using odbc::odbcListDrivers()` and see if it is present.
+
 ## Installation
 ``` R
 devtools::install_github("MPO-Quebec-Science/AndesCrabe")
@@ -52,7 +61,7 @@ devtools::document()
 to load the library in memory without installing it.
 
 To test the github package, detach an re-install
-```
+``` R
 detach("package:ANDESCrabe", unload=TRUE)
 devtools::install_github("MPO-Quebec-Science/AndesCrabe")
 library(ANDESCrabe)
