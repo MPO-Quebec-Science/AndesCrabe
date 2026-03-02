@@ -65,8 +65,7 @@ get_specimens_bsm <- function(andes_db_connection) {
   specimens <- format_sex(specimens)
 
   # sample_class can be removed
-  specimens <- subset(specimens, select = -c(sample_class))
-
+  specimens$sample_class <- NULL
   # add format dates from the set HEUR_DEB
   specimens <- format_dates(specimens, reference_column = "HEUR_DEB")
 

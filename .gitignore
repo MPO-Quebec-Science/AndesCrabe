@@ -6,3 +6,4 @@
 
 # ignore this for now to prevent annoying projectId changes
 *.Rproj
+inst/doc

@@ -1,3 +1,23 @@
+---
+title: "andes_crabe"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{andes_crabe}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ANDESCrabe)
+```
+
 # Table mesures  
 - `OBS` : simplement un no. séquentiel i.e., le num de ligne ?  
 - `Mesureur` : Nom du mesureur, je peux donne les noms d'ANDES? i.e., seanfd, sauthier, sarah, isabelle,  (et pas DS, GC, SL, IL)  
