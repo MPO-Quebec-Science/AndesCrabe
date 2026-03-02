@@ -1,4 +1,5 @@
 # ANDES crabe
+[![R-CMD-check](https://github.com/MPO-Quebec-Science/AndesCrabe/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MPO-Quebec-Science/AndesCrabe/actions/workflows/R-CMD-check.yaml)
 
 Ce dépot contient des wrappers en `R` de commandes `SQL` pour extraire des données de crabe des neiges (équipe IML de la région du Québec) fait avec ANDES.
 

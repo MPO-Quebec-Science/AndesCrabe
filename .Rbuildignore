@@ -1,2 +1,10 @@
 ^[.]?air[.]toml$
 ^\.vscode$
+^\.github$
+
+
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+SECURITY.md
+example.Renviron
+run.R
