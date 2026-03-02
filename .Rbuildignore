@@ -8,3 +8,4 @@ CONTRIBUTING.md
 SECURITY.md
 example.Renviron
 run.R
+plot_depth_profile.R
