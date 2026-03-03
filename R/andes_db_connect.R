@@ -1,6 +1,6 @@
 #' Establish a connection to the andes database
 #'
-#' This is a wrapper for the `RMySQL::dbConnect`, see it's documentation for more details.
+#' This is a wrapper for the `DBI::dbConnect`, see it's documentation for more details.
 #' @param url_bd URL of the ANDES database server.
 #' @param port_bd Port number for the ANDES database connection.
 #' @param nom_usager Username for the ANDES database.

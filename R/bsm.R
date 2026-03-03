@@ -35,9 +35,9 @@ get_fishing_sets_bsm_db <- function(andes_db_connection) {
     "fishing_sets_bsm.sql",
     package = "ANDESCrabe"
   ))
-  result <- RMySQL::dbSendQuery(andes_db_connection, query)
-  sets <- RMySQL::dbFetch(result, n = Inf)
-  RMySQL::dbClearResult(result)
+  result <- DBI::dbSendQuery(andes_db_connection, query)
+  sets <- DBI::dbFetch(result, n = Inf)
+  DBI::dbClearResult(result)
 
   return(sets)
 }
@@ -92,9 +92,9 @@ get_specimens_bsm_db <- function(andes_db_connection) {
     package = "ANDESCrabe"
   ))
 
-  result <- RMySQL::dbSendQuery(andes_db_connection, query)
-  specimens <- RMySQL::dbFetch(result, n = Inf)
-  RMySQL::dbClearResult(result)
+  result <- DBI::dbSendQuery(andes_db_connection, query)
+  specimens <- DBI::dbFetch(result, n = Inf)
+  DBI::dbClearResult(result)
 
   return(specimens)
 }
