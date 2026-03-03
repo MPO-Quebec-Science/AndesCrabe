@@ -3,7 +3,7 @@
 #' This function executes a SQL query to retrieve fishing set data from the ANDES database.
 #' The current ANDES active mission will determine for which mission the sets are returned.
 #'
-#' @param andes_db_connection a connection object to the ANDES database.
+#' @inheritParams get_fishing_sets_bsm_db
 #' @return A dataframe containing fishing set data.
 #' @seealso [get_fishing_sets_bsm_db()] for the raw database results
 #' @export
@@ -48,7 +48,7 @@ get_fishing_sets_bsm_db <- function(andes_db_connection) {
 #' This function executes a SQL query to retrieve specimen data from the ANDES database.
 #' The current ANDES active mission will determine for which mission the specimens are returned.
 #'
-#' @param andes_db_connection a connection object to the ANDES database.
+#' @inheritParams get_specimens_bsm_db
 #' @return A dataframe containing fishing set data.
 #' @seealso [get_specimen_bsm_db()] for the raw database results
 #' @export
