@@ -1,8 +1,31 @@
-require(ggplot2)
+---
+title: "plot_depth"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{plot_depth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
-theme_set(theme_bw())
+```{r setup}
+# library(ANDESCrabe)
+devtools::load_all()
+library(ggplot2)
+library(DBI)
+ggplot2::theme_set(theme_bw())
+```
 
+## Fonctions qui aide à obtenir les donneés
+Le tracé de profondeurs est enrégistré en continue. Pour obtenir le tracé d'un trait, il faut lui donner les bornes temporel avec `start_dt` et `end_dt`.
+``` R
+library(DBI)
 
 get_depth_trace <- function(andes_db_connection, start_dt, end_dt) {
   start_str <- strftime(start_dt - 60, format = '%Y-%m-%d %H:%M:%S', tz = 'UTC')
@@ -12,15 +35,19 @@ get_depth_trace <- function(andes_db_connection, start_dt, end_dt) {
     start_str,
     end_str
   )
-  result <- dbSendQuery(andes_db_connection, query)
-  depth <- fetch(result)
+  result <- DBI::dbSendQuery(andes_db_connection, query)
+  depth <- DBI::dbfetch(result)
   print(depth)
-  dbClearResult(result)
+  DBI::dbClearResult(result)
   depth$time <- as.POSIXct(depth$time, tz = "UTC")
   attr(depth$time, 'tzone') <- "Canada/Eastern"
   return(depth)
 }
+```
 
+Nous pouvons obtenir ces bornes avec cette fonction, mais il faut lui queil QUELLE trait (par numéro de trait)
+``` R
+library(DBI)
 
 get_set_times <- function(andes_db_connection, mission_id = 0, set_number = 0) {
   query <- sprintf(
@@ -28,9 +55,9 @@ get_set_times <- function(andes_db_connection, mission_id = 0, set_number = 0) {
     mission_id,
     set_number
   )
-  result <- dbSendQuery(andes_db_connection, query)
-  dates <- fetch(result)
-  dbClearResult(result)
+  result <- DBI::dbSendQuery(andes_db_connection, query)
+  dates <- DBI::fetch(result)
+  DBI::dbClearResult(result)
   start_dt <- as.POSIXct(strptime(
     dates$start_date,
     format = '%Y-%m-%d %H:%M:%S',
@@ -46,7 +73,13 @@ get_set_times <- function(andes_db_connection, mission_id = 0, set_number = 0) {
 
   return(c(start_dt, end_dt))
 }
+```
 
+## Fonctions fait le graphique
+
+Et donc, nous pouvons combiner ces fonctions ci-haut pour fair eune graphique des profondeurs.
+``` R
+library(ggplot2)
 
 plot_depth_profile <- function(
   andes_db_connection,
@@ -115,9 +148,9 @@ plot_depth_profile <- function(
 
   return(p)
 }
+```
 
-
-#########################################################
-
-# voir le profile de profondeur du trait 33
+Et utiliser cette fonction pour obtenir le graphique finale
+``` R
 plot_depth_profile(andes_db_connection, mission_id = 68, set_number = 1)
+```
